@@ -1,2 +1,7 @@
 def namecount(name):
-    return sum([ord(letter) - ord('a') + 1 for letter in name.lower()])
+    return sum(map(letter_value, name))
+
+
+def letter_value(letter):
+    assert len(letter) == 1
+    return ord(letter.lower()) - ord('a') + 1
