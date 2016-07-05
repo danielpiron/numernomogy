@@ -15,6 +15,10 @@ class TestNameCounts(unittest.TestCase):
         self.assertEqual(42, nc.namecount('Alex'))
         self.assertEqual(42, nc.namecount('Evan'))
 
+    def test_namecount_assert_on_numbers(self):
+        with self.assertRaises(AssertionError):
+            nc.namecount('4real')
+
 
 if __name__ == '__main__':
     unittest.main()
