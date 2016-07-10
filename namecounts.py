@@ -1,8 +1,5 @@
-from collections import namedtuple
-from enum import Enum
 import os
-import re
-import zipfile
+import namefile
 
 NAME_FILE = os.path.expanduser('~/Downloads/names.zip')
 
@@ -16,27 +13,16 @@ def letter_value(letter):
     assert letter.isalpha()
     return ord(letter.lower()) - ord('a') + 1
 
-CRE_YOB_DATAFILE = re.compile('yob\d{4}\.txt')
-
-
-class Gender(Enum):
-    female = 'f'
-    male = 'm'
-
-NameFrequency = namedtuple('NameFrequency', 'frequency name gender')
-
-
 if __name__ == '__main__':
 
-    gender_translation = {
-        'F': Gender.female,
-        'M': Gender.male
-    }
-
+    import pprint
+    import zipfile
     with zipfile.ZipFile(NAME_FILE) as zf:
 
         freq_table = []
         for line in zf.open('yob2015.txt'):
-            name, gender, freq = line.decode().strip().split(',')
-            nf = NameFrequency(freq, name, gender_translation[gender])
+            nf = namefile.read_record(line.decode())
             freq_table.append(nf)
+
+        forty_twos = filter(lambda e: namecount(e.name) == 42, freq_table)
+        pprint.pprint(list(forty_twos))

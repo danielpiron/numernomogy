@@ -1,5 +1,17 @@
 import namecounts as nc
+import namefile
 import unittest
+
+
+class TestNameFileReader(unittest.TestCase):
+
+    def test_line_reader(self):
+        expected = namefile.NameFrequency(1234, 'Daniel', namefile.Gender.male)
+        self.assertEqual(expected, namefile.read_record('Daniel,M,1234'))
+
+    def test_line_reader_arbitrary_whitespace(self):
+        expected = namefile.NameFrequency(4321, 'Amy', namefile.Gender.female)
+        self.assertEqual(expected, namefile.read_record(' Amy,  F, 4321\n'))
 
 
 class TestNameCounts(unittest.TestCase):
