@@ -1,7 +1,19 @@
+from pprint import pprint as pp
 import os
+
 import namefile
 
 NAME_FILE = os.path.expanduser('~/Downloads/names.zip')
+
+
+def main():
+    nf = namefile.Namefile(NAME_FILE)
+    freq_table = nf.names_from_year('2015')
+    pp(freq_table)
+
+
+def names_with_value(freq_table):
+    return list(filter(lambda e: namecount(e.name) == 42, freq_table))
 
 
 def namecount(name):
@@ -15,8 +27,4 @@ def letter_value(letter):
 
 
 if __name__ == '__main__':
-    from pprint import pprint as pp
-    nf = namefile.Namefile(NAME_FILE)
-    freq_table = nf.names_from_year('2015')
-    forty_twos = filter(lambda e: namecount(e.name) == 42, freq_table)
-    pp(list(forty_twos))
+    main()
